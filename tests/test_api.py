@@ -16,7 +16,3 @@ def test_process_search(app):
     mock_csv_data_provider.return_value = mock_results_service
     task = process_search.apply(args=[1, {'name': 'John', 'city': 'New York'}, 10])
     assert task.status == 'SUCCESS'
-    # import pdb
-    # pdb.set_trace()
-    # app.redis.set.assert_called_once()
-    # app.redis.expire.assert_called_once()

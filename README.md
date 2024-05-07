@@ -27,10 +27,12 @@ Allows users to check the status or retrieve the result of a search task using a
 ### Extensible ResultsService with Multiple DataProviders
 The Async CSV Search API utilizes an extensible ResultsService that allows for the management of multiple DataProviders. This design enables the API to easily incorporate new data sources or change existing ones without requiring significant modifications to the core functionality.
 
+### ResultsService
+The ResultsService class orchestrates the search process by aggregating results from different DataProviders. It allows for a flexible and scalable approach to searching, making it easy to integrate new search strategies or data sources.
+
 ### DataProviders
 VibraCSVDataProvider: This DataProvider is specifically designed to handle CSV files with a format similar to vibra_challenge.csv. It implements methods to adapt search terms and perform searches based on the provided criteria.
-ResultsService
-The ResultsService class orchestrates the search process by aggregating results from different DataProviders. It allows for a flexible and scalable approach to searching, making it easy to integrate new search strategies or data sources.
+
 
 ### Redis Expiring Keys for Temporary Results Storage
 To manage search results efficiently, the API uses Redis expiring keys. When a search task is enqueued, the API stores the task ID and the search results in Redis with a specified expiration time. This approach ensures that search results are automatically deleted from Redis after a certain period, reducing the risk of storing outdated or unnecessary data.
