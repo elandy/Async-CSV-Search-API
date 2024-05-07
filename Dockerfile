@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM python:3.11-alpine
 
 ENV USER scaffold
 ENV HOME /home/$USER
@@ -14,8 +14,7 @@ USER $USER
 WORKDIR $HOME
 
 COPY --chown=scaffold:scaffold app app
-COPY --chown=scaffold:scaffold migrations migrations
-COPY --chown=scaffold:scaffold *.py *.toml *.sh ./
+COPY --chown=scaffold:scaffold *.py *.toml *.sh .env ./
 
 RUN sudo apk add --virtual .build-deps gcc g++ libffi-dev musl-dev && \
     curl -sSL https://install.python-poetry.org | python && \

@@ -1,32 +1,41 @@
-# flask-scaffold
+# Async CSV Search API
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/81fa5c454ada4729bdbc3c1d8b2722bd)](https://app.codacy.com/app/kigawas/flask-scaffold)
-[![Github Actions](https://img.shields.io/github/checks-status/kigawas/flask-scaffold/master)](https://github.com/kigawas/flask-scaffold/actions)
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/kigawas/flask-scaffold.svg)](https://hub.docker.com/r/kigawas/flask-scaffold/)
-[![License](https://img.shields.io/github/license/kigawas/flask-scaffold.svg)](https://github.com/kigawas/flask-scaffold)
-
-A scaffold to speed up launching a flask project, set up with [minimal dependencies](https://github.com/kigawas/flask-scaffold/blob/master/pyproject.toml).
-
-You can just remove `LICENSE`, `.git/`, and `.vscode/` files if you don't need them.
-
-There is no silver bullet, so if other libraries or practice are preferred, you can add or change anything as you like.
 
 ## Prerequisites
 
-- Python 3.7+
+- Python 3.11+
 
 - Poetry
 
-- (Optional) Docker and docker compose
+- Docker and docker compose
 
 ## Main features
 
-- [APIFlask](https://apiflask.com/)
-- Blueprint templates to organize directory structure
-- Colorful logger in terminals, stolen from [tornado](https://github.com/tornadoweb/tornado/blob/master/tornado/log.py)
-- Gunicorn aiohttp server for production use
-- Integrated with static analysis and lint tools like `mypy`, `black`, `flake8` and git hook tool [`pre-commit`](https://pre-commit.com/#intro)
-- Default [Github Actions](https://github.com/kigawas/flask-scaffold/actions) and [Heroku](https://scaffold-flask.herokuapp.com/) configuration
+This is an asynchronous CSV search API built with Flask and Celery, using Redis as the broker and result backend.
+
+### Search Endpoint: 
+Allows users to enqueue a search task by providing search parameters such as name and city.
+    
+    curl -X GET 'http://localhost:5000/search?name=John&city=New%20York&quantity=10'
+
+### Result Endpoint: 
+Allows users to check the status or retrieve the result of a search task using a task ID.
+
+    curl -X GET 'http://localhost:5000/search_result/task_id'
+
+### Extensible ResultsService with Multiple DataProviders
+The Async CSV Search API utilizes an extensible ResultsService that allows for the management of multiple DataProviders. This design enables the API to easily incorporate new data sources or change existing ones without requiring significant modifications to the core functionality.
+
+### DataProviders
+VibraCSVDataProvider: This DataProvider is specifically designed to handle CSV files with a format similar to vibra_challenge.csv. It implements methods to adapt search terms and perform searches based on the provided criteria.
+ResultsService
+The ResultsService class orchestrates the search process by aggregating results from different DataProviders. It allows for a flexible and scalable approach to searching, making it easy to integrate new search strategies or data sources.
+
+### Redis Expiring Keys for Temporary Results Storage
+To manage search results efficiently, the API uses Redis expiring keys. When a search task is enqueued, the API stores the task ID and the search results in Redis with a specified expiration time. This approach ensures that search results are automatically deleted from Redis after a certain period, reducing the risk of storing outdated or unnecessary data.
+
+
+
 
 ## Common tasks
 
@@ -45,6 +54,10 @@ There is no silver bullet, so if other libraries or practice are preferred, you 
 ### Run development gunicorn server with aiohttp worker
 
     gunicorn -b :5000 aioapp:aioapp -k aiohttp.worker.GunicornWebWorker --reload
+
+## Run celery
+
+    celery -A app.tasks worker -Q search_queue --loglevel=INFO
 
 ### Run production gunicorn server
 
