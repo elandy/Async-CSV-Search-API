@@ -12,16 +12,17 @@
 ## Main features
 
 This is an asynchronous CSV search API built with Flask and Celery, using Redis as the broker and result backend.
+The Flask application is served using Gunicorn, a WSGI HTTP server for Python, and Nginx acts as a reverse proxy, providing enhanced performance and security.
 
 ### Search Endpoint: 
 Allows users to enqueue a search task by providing search parameters such as name and city.
     
-    curl -X GET 'http://localhost:5000/search?name=John&city=New%20York&quantity=10'
+    curl -X GET 'http://localhost/search?name=John&city=New%20York&quantity=10'
 
 ### Result Endpoint: 
 Allows users to check the status or retrieve the result of a search task using a task ID.
 
-    curl -X GET 'http://localhost:5000/search_result/task_id'
+    curl -X GET 'http://localhost/search_result/task_id'
 
 ### Extensible ResultsService with Multiple DataProviders
 The Async CSV Search API utilizes an extensible ResultsService that allows for the management of multiple DataProviders. This design enables the API to easily incorporate new data sources or change existing ones without requiring significant modifications to the core functionality.

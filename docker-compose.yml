@@ -15,3 +15,11 @@ services:
     image: redis:alpine
     sysctls:
       net.core.somaxconn: 511
+
+  proxy:
+    build: proxy
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - web
