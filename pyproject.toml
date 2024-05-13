@@ -27,7 +27,7 @@ redis = "^5.0.4"
 hiredis = "^2.0.0"
 
 python-dotenv = "^1.0.1"
-fakeredis = "^2.23.0"
+fakeredis = "^2.23.1"
 
 [tool.poetry.dev-dependencies]
 mypy = "^1.10.0"
