@@ -33,7 +33,7 @@ fakeredis = "^2.23.0"
 mypy = "^1.10.0"
 ipython = "^8.24.0"
 black = "^24.4.2"
-flake8 = "^7.0.0"
+flake8 = "^7.1.0"
 pre-commit = "^3.7.0"
 celery-stubs = "^0.1.3"
 
