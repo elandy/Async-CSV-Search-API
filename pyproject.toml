@@ -10,7 +10,7 @@ authors = [
 python = "^3.11"
 
 # flask
-APIFlask = "^2.1.1"
+APIFlask = "^2.1.2"
 flask = "^3.0.0"
 
 # celery
