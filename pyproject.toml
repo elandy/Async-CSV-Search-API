@@ -24,7 +24,7 @@ aiohttp_wsgi = "^0.10.0"
 # db
 psycopg2 = "^2.9.9"
 redis = "^5.0.4"
-hiredis = "^2.0.0"
+hiredis = "^3.0.0"
 
 python-dotenv = "^1.0.1"
 fakeredis = "^2.23.0"
